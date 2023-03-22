@@ -8,7 +8,7 @@ BCDV1022 - Blockchain Explorer
 - **Student ID:** 101448933
 
 ## API Hosted On
-https://blockchain-explorer-gbc.netlify.app/
+https://blockchain-explorer-api-z0rh.onrender.com/
 
 ## Instruction on How to Run this Project Locally
 1. Download this GitHub Repo or Run ```git clone https://github.com/allentsangdev/Blockchain-Explorer-Server.git``` to clone this Repo to your local environment
