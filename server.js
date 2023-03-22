@@ -1,13 +1,16 @@
 const getAddress = require ('./modules/getAddress.js') 
-
 const express = require ('express')
-
+const cors = require('cors')
 const app = express()
-
 const PORT = process.env.port || 4000
-
 const router = express.Router()
 
+// using cors() as middleware
+// Cross-origin resource sharing (CORS) allows AJAX requests to skip the Same-origin policy and access resources from remote hosts.
+app.use(cors())
+
+
+// defining routers
 router.get('/', (req, res) => {
 	res.status(200).send('<h1>This is the Landing Page of the Blockchain Explorer Backend Server</h1>')
 })
