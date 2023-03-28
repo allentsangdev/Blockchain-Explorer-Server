@@ -36,5 +36,5 @@ function getBalance(_address) {
 	
 module.exports = {
 	getAddress,
-	getBalance
+  getBalance
 }
