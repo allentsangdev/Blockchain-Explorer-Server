@@ -28,7 +28,7 @@ async function getTransactionHistory() {
     return history
 }
 
-module.export = {
+module.exports = {
     getTransactionHistory
 }
 

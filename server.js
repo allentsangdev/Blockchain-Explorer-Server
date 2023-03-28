@@ -1,5 +1,5 @@
-const getAddress = require ('./modules/Account.js') 
-const getTransactionHistory = require ('./modules/Transaction.js') 
+const {getAddress, getBalance} = require ('./modules/Account.js') 
+const {getTransactionHistory} = require ('./modules/Transaction.js') 
 const express = require ('express')
 const cors = require('cors')
 const app = express()
@@ -16,35 +16,36 @@ router.get('/', (req, res) => {
 })
 
 // GET request: calls getAddresses method from the Account module
-router.get('/account/addresses', (req,res) => {
+router.get('/account/addresses', async (req,res) => {
 	try {
-		const addresses = getAddress()
+		const addresses = await getAddress()
 		console.log(addresses)
 		res.status(200).send(addresses)
-	} catch {
-		res.status(500).send('There is an unexpected condition. Please contact system admin')
+	} catch(error) {
+		res.status(500).send(`Server side error: ${error.message}`)
 	}
 })
 
 // GET request: calls getBalance method from Account module
-router.get('/account/balance', (req,res) => {
+router.get('/account/balance/:address', (req,res) => {
 	try {
-		const balance = getBalance()
+		const address = req.params.address
+		const balance = getBalance(address)
 		console.log(balance)
 		res.status(200).send(balance)
-	} catch {
-		res.status(500).send('There is an unexpected condition. Please contact system admin')
+	} catch(error) {
+		res.status(500).send(`Server side error: ${error.message}`)
 	}
 })
 
 // GET request: calls the getTransactionHistory method from the Transaction module
-router.get('/account/history', (req,res) => {
+router.get('/account/history', async (req,res) => {
 	try {
-		const history = getTransactionHistory()
+		const history = await getTransactionHistory()
 		console.log(history)
 		res.status(200).send(history)
-	} catch {
-		res.status(500).send('There is an unexpected condition. Please contact system admin')
+	} catch(error) {
+		res.status(500).send(`Server side error: ${error.message}`)
 	}
 })
 
