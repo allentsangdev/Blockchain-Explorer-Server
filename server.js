@@ -32,7 +32,7 @@ router.get('/account/balance/:address', (req,res) => {
 		const address = req.params.address
 		const balance = getBalance(address)
 		console.log(balance)
-		res.status(200).send({"balance":balance})
+		res.status(200).send(balance)
 	} catch(error) {
 		res.status(500).send(`Server side error: ${error.message}`)
 	}

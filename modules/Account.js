@@ -31,7 +31,7 @@ function getAddress() {
 
 function getBalance(_address) {
 	const obj = mockAddresses.find(item => item.address === _address);
-	return obj ? obj.balance : "Address not found";
+	return obj ? obj : "Address not found";
 }   
 	
 module.exports = {
