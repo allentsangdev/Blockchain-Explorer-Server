@@ -1,6 +1,13 @@
-const mongoose = require('mongoose')
+// This module contain functions from Full Stack 2 and Full Stack 3
+// function "sendTransaction" is created for Full Stack 3 Lab Test
 
+// MongoDB Configuration
+const mongoose = require('mongoose')
 const dbUri = 'mongodb+srv://allen-admin:test1234@cluster0.bgd3asx.mongodb.net/transaction?retryWrites=true&w=majority'
+
+// Web3.js Configuration
+const Web3 = require("web3");
+let web3 = new Web3("HTTP://127.0.0.1:7545");
 
 // define transaction history data schema
 const TransactionSchema = new mongoose.Schema({
@@ -28,24 +35,35 @@ async function getTransactionHistory() {
     return history
 }
 
-module.exports = {
-    getTransactionHistory
+// function for full stack 3 lab test
+// _source will be the user's private key
+// _destination will be the recipient's public address
+// _value will be tranfer amount in WEI
+// this function will return the transaction receipt
+async function sendTransaction(_source, _destination, _value) {
+    
+    // Hardcoded Gas Limit
+    const _txGasLimit = "21000"
+    
+    const signTxnParams = {
+        to: _destination,
+        value: _value,
+        gas: _txGasLimit 
+    }
+
+    // sign the transaction
+    const transactionSignature = await web3.eth.accounts.signTransaction(signTxnParams, _source)
+
+    // send the signed transaction
+    const transfer = await web3.eth.sendSignedTransaction(transactionSignature.rawTransaction)
+    
+    console.log(transfer)
+    // return the transaction receipt
+    return transfer
+
 }
 
-/*
-const transactionHistoryData = new transactionModel(
-    {
-        transactionHash: "0x1367409cddde9a7c8571d34f935adcb2a50214f2afbb151bb16eaf8847dda2ff",
-        status: "SUCCESS",
-        timeStamp: "2022-03-29T044:08:03.172Z",
-        from: "0x6dC70bEa16f1ef94A7350989ca5413a2E180860f",
-        to: "0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F",
-        value: "250 ETH",
-        gasUsed: "21000"
-    })
-  
-  transactionHistoryData.save()
-  .then(()=>{console.log('saved')})
-
-getTransactionHistory()
-*/
+module.exports = {
+    getTransactionHistory,
+    sendTransaction
+}
