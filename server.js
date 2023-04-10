@@ -21,8 +21,10 @@ router.get('/', (req, res) => {
 
 // GET request: calls getAddresses method from the Account module
 router.get('/account/addresses', async (req,res) => {
-	const RPC = req.query.RPC
+	
 	try {
+		const RPC = req.query.RPC
+		console.log(RPC)
 		const addresses = await getAddress(RPC)
 		console.log(addresses)
 		res.status(200).send(addresses)
