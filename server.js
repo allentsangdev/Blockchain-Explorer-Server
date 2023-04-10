@@ -21,8 +21,9 @@ router.get('/', (req, res) => {
 
 // GET request: calls getAddresses method from the Account module
 router.get('/account/addresses', async (req,res) => {
+	const {RPC} = req.query.RPC
 	try {
-		const addresses = await getAddress()
+		const addresses = await getAddress(RPC)
 		console.log(addresses)
 		res.status(200).send(addresses)
 	} catch(error) {
@@ -33,8 +34,9 @@ router.get('/account/addresses', async (req,res) => {
 // GET request: calls getBalance method from Account module
 router.get('/account/balance/:address', (req,res) => {
 	try {
+		const {RPC} = req.body
 		const address = req.params.address
-		const balance = getBalance(address)
+		const balance = getBalance(address, RPC)
 		console.log(balance)
 		res.status(200).send(balance)
 	} catch(error) {

@@ -85,7 +85,7 @@ async function sendTransaction(_source, _destination, _value) {
       
 }
 
-const x = sendTransaction('fd6905e54e7e8f76373be48f776de4d8835b5db04382d0d329593957d0c91887','0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F','5000000000000000000').then(console.log)
+//const x = sendTransaction('fd6905e54e7e8f76373be48f776de4d8835b5db04382d0d329593957d0c91887','0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F','5000000000000000000').then(console.log)
 
 module.exports = {
     getTransactionHistory,
