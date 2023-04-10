@@ -1,39 +1,21 @@
-const mockAddresses = [
-  {
-    address: "0x6dC70bEa16f1ef94A7350989ca5413a2E180860f",
-    balance: "10 ETH",
-  },
-  {
-    address: "0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F",
-    balance: "10 ETH",
-  },
-  {
-    address: "0x36Ea572e283b1E6d18942d3344c178c810A0d8dD",
-    balance: "10 ETH",
-  },
-  {
-    address: "0x49F0B7F9B45Ed3a139E345B14530a9D92B30B04e",
-    balance: "10 ETH",
-  },
-  {
-    address: "0x69CE2776D92bcC75ab4148B54d8C86A6F136C8AC",
-    balance: "100 ETH",
-  }
-];
+const Web3 = require('web3')
+const web3  = new Web3("HTTP://127.0.0.1:7545")
 
-function getAddress() {
-	const address = []
-  	mockAddresses.map((item) => {
-	address.push(item.address)
-  })
-	return address
+async function getAddress() {
+ const addresses = await web3.eth.getAccounts()
+ return addresses
 };
 
-function getBalance(_address) {
-	const obj = mockAddresses.find(item => item.address === _address);
-	return obj ? obj : "Address not found";
+// return the balance of a address in WEI
+async function getBalance(address) {
+  const balance = await web3.eth.getBalance(address)
+  return balance
 }   
 	
+
+//const x = getAddress().then(console.log)
+//const x = getBalance('0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F').then(console.log)
+
 module.exports = {
 	getAddress,
   getBalance
