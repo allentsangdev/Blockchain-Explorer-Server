@@ -43,12 +43,10 @@ async function getTransactionHistory() {
 async function sendTransaction(_source, _destination, _value) {
     
     // Hardcoded Gas Limit
-    const _txGasLimit = "21000"
-    
     const signTxnParams = {
-        to: _destination,
-        value: _value,
-        gas: _txGasLimit 
+    to: _destination,
+    value: _value,
+    gas: "21000"
     }
 
     // sign the transaction
@@ -56,12 +54,38 @@ async function sendTransaction(_source, _destination, _value) {
 
     // send the signed transaction
     const transfer = await web3.eth.sendSignedTransaction(transactionSignature.rawTransaction)
-    
-    console.log(transfer)
-    // return the transaction receipt
-    return transfer
 
+    // saving the transaction receipt to mongodb
+    try{
+        mongoose.connect(dbUri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+        // destructuring the transaction receipt returned from the web3.js send transaction functino
+        const {transactionHash,status,from,to,gasUsed} = transfer
+        const timeStamp = new Date()
+
+        const transaction = new transactionModel({
+            transactionHash: transactionHash,
+            status: status,
+            timeStamp: timeStamp.toLocaleString(),
+            from: from,
+            to: to,
+            value: _value,
+            gasUsed: gasUsed
+        })
+
+        const saveResult = await transaction.save()
+        
+        // return the save result to the function
+        return saveResult
+    }catch(error){
+        console.log(`MongoDB Error: ${error.message}`)
+    }
+      
 }
+
+const x = sendTransaction('fd6905e54e7e8f76373be48f776de4d8835b5db04382d0d329593957d0c91887','0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F','5000000000000000000').then(console.log)
 
 module.exports = {
     getTransactionHistory,
