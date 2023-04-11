@@ -6,8 +6,9 @@ const mongoose = require('mongoose')
 const dbUri = 'mongodb+srv://allen-admin:test1234@cluster0.bgd3asx.mongodb.net/transaction?retryWrites=true&w=majority'
 
 // Web3.js Configuration
+const RPC = require('../config')
 const Web3 = require("web3");
-let web3 = new Web3("HTTP://127.0.0.1:7545");
+let web3 = new Web3(RPC);
 
 // define transaction history data schema
 const TransactionSchema = new mongoose.Schema({
@@ -76,13 +77,12 @@ async function sendTransaction(_source, _destination, _value) {
         })
 
         const saveResult = await transaction.save()
-        
-        // return the save result to the function
-        return saveResult
+
     }catch(error){
         console.log(`MongoDB Error: ${error.message}`)
     }
-      
+    
+    return transfer
 }
 
 //const x = sendTransaction('fd6905e54e7e8f76373be48f776de4d8835b5db04382d0d329593957d0c91887','0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F','5000000000000000000').then(console.log)

@@ -23,9 +23,7 @@ router.get('/', (req, res) => {
 router.get('/account/addresses', async (req,res) => {
 	
 	try {
-		const RPC = req.query.RPC
-		console.log(RPC)
-		const addresses = await getAddress(RPC)
+		const addresses = await getAddress()
 		console.log(addresses)
 		res.status(200).send(addresses)
 	} catch(error) {
@@ -34,11 +32,10 @@ router.get('/account/addresses', async (req,res) => {
 })
 
 // GET request: calls getBalance method from Account module
-router.get('/account/balance/:address', (req,res) => {
+router.get('/account/balance/:address', async(req,res) => {
 	try {
-		const RPC = req.query.RPC
 		const address = req.params.address
-		const balance = getBalance(address, RPC)
+		const balance = await getBalance(address)
 		console.log(balance)
 		res.status(200).send(balance)
 	} catch(error) {
