@@ -1,6 +1,3 @@
-// This module contain functions from Full Stack 2 and Full Stack 3
-// function "sendTransaction" is created for Full Stack 3 Lab Test
-
 // MongoDB Configuration
 const mongoose = require('mongoose')
 const dbUri = 'mongodb+srv://allen-admin:test1234@cluster0.bgd3asx.mongodb.net/transaction?retryWrites=true&w=majority'
@@ -26,7 +23,7 @@ const TransactionSchema = new mongoose.Schema({
 // define transaction history model
 const transactionModel = new mongoose.model('history', TransactionSchema)
 
-// async functino to fetch all history document
+// async function to fetch all history document
 async function getTransactionHistory() {
     mongoose.connect(dbUri, {
         useNewUrlParser: true,
@@ -62,7 +59,7 @@ async function sendTransaction(_source, _destination, _value) {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-        // destructuring the transaction receipt returned from the web3.js send transaction functino
+        // destructuring the transaction receipt returned from the web3.js send transaction function
         const {transactionHash,status,from,to,gasUsed} = transfer
         const timeStamp = new Date()
 
@@ -84,8 +81,6 @@ async function sendTransaction(_source, _destination, _value) {
     
     return transfer
 }
-
-//const x = sendTransaction('fd6905e54e7e8f76373be48f776de4d8835b5db04382d0d329593957d0c91887','0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F','5000000000000000000').then(console.log)
 
 module.exports = {
     getTransactionHistory,

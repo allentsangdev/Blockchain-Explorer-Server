@@ -76,8 +76,6 @@ router.post('/transaction/send',async(req,res) =>{
 
 })
 
-
-
 app.use('/', router)
 
 app.listen(PORT, () => {

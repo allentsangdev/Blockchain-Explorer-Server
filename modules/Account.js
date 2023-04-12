@@ -1,5 +1,7 @@
+// importing the RPC Server endpoint from config file
 const RPC = require('../config')
 
+// return the addresses of the node controls
 async function getAddress() {
   const Web3 = require('web3')
   const web3  = new Web3(RPC)
@@ -19,10 +21,6 @@ async function getBalance(address) {
   return accountBalanceObj
 }   
 	
-//console.log(RPC)
-//const x = getAddress().then(console.log)
-//const x = getBalance('0x03d0cf3f4A832C8E2c224BaA4a049110F39E630F').then(console.log)
-
 module.exports = {
 	getAddress,
   getBalance
